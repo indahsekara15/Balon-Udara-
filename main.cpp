@@ -1,182 +1,321 @@
-#include <stdio.h>
-#include <windows.h>
-#include <GL/glu.h>
-#include <GL/gl.h>
+#include <math.h>
+#include <stdlib.h>
 #include <GL/glut.h>
+#include <stdio.h>
+#include <math.h>
+#include <GL/glut.h>
+#include <string.h>
+#include <assert.h>
+#include <stdarg.h>
 
 
-int w=1024, h=720, z=0;
-int x1=0, y1=0, sudut=0, z1=0, skalaX=0, skalaY=0;
+float angle2=0.0;    // Variable sudut pada saat animasi
+float red=1.0, blue=0.3, green=0.5;
+float sudut=0.0;
+float asd=0.0, fgh=0.0;
+float _x=0,_y=0,_z=0;
+float ert=0.0, yui=0.0;
 
-GLuint texture; //array untuk texture
-
-GLuint LoadTexture( const char * filename, int width, int height )
-{
-GLuint texture;
-unsigned char * data;
-FILE * file;
-
-file = fopen( filename, "rb" );
-if ( file == NULL ) return 0;
-data = (unsigned char *)malloc( width * height * 3 );
-fread( data, width * height * 3, 1, file );
-fclose( file );
-
-glGenTextures( 1, &texture );
-glBindTexture( GL_TEXTURE_2D, texture );
-glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
-glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-
-glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-
-gluBuild2DMipmaps( GL_TEXTURE_2D, 3, width, height, GL_RGB, GL_UNSIGNED_BYTE, data );
-free( data ); //free the texture
-return texture; //return whether it was successfull
-}
-
-void FreeTexture( GLuint texture )
-{
-glDeleteTextures( 1, &texture );
-}
-
-GLfloat whiteSpecularLight[] = {0.0f, 1.0f, 1.0f, 1.0f};
-GLfloat blackAmbientLight[] = {0.0f, 1.0f, 1.0f, 1.0f};
-GLfloat whiteDiffuseLight[] = {0.0f, 1.0f, 1.0f, 1.0f};
-GLfloat blankMaterial[] = {0.0, 0.0, 0.0};
-GLfloat mShininess[] = {20};
-
-bool diffuse = false;
-bool emissive = false;
-bool specular = false;
+//Variable untuk manipulasi sudut pandang
+static float angle=0.0,ratio;            //Sudut perputaran kamera (terhadap sumbu y)
+static float x=0.0f,y=10.75f,z=55.0f;      //Posisi Kamera
+static float lx=0.0f,ly=0.0f,lz=-1.0f;   //Vektor sudut pandang
 
 
-void init(void){
-glClearColor(0.0,0.0,0.0,0.0);
-glShadeModel(GL_FLAT);
-glEnable (GL_DEPTH_TEST);
-glEnable (GL_LIGHTING);
-glEnable (GL_LIGHT0);
-}
+void garis_xy(){
 
-void light (void) {
-    glLightfv(GL_LIGHT0, GL_SPECULAR, whiteSpecularLight);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, blackAmbientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteDiffuseLight);
-}
 
-void display(void){
-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-glLoadIdentity();
+     glPushMatrix();
 
-gluLookAt(0.0,10.0,3.0,0.0,0.0,0.0,0.0,1.0,0.0);
+glTranslated(_x,_y,_z);
 
-glEnable( GL_TEXTURE_2D ); //enable 2D texturing
-glEnable(GL_TEXTURE_GEN_S);
-glEnable(GL_TEXTURE_GEN_T);
-light();
 
-glTranslatef(0,z,0);
-glRotatef(sudut,x1,y1,z1);
 
-//Balon
-texture = LoadTexture( "lines.raw", 256, 256 );
-glBindTexture( GL_TEXTURE_2D, texture );
-glutSolidSphere(2.0,20,50);
+     float i;
 
+            glColor3f( 1.0, 1.0, 1.0);
+  	        glBegin( GL_LINES);
+
+            for (i=-20; i<20; i=i+1) {
+
+                   glVertex3f( -20, i, 0);
+                  glVertex3f( 20, i, 0);
+                   glVertex3f( i,-20, 0);
+                  glVertex3f( i,20, 0);
+                  }
+
+
+           glEnd();
+            glPopMatrix();
+
+          glutSwapBuffers();
+           }
+
+void awan(){
 glPushMatrix();
-glTranslatef(0,0,2.9);
-glScalef(1,1,0.5);
-glutSolidTorus(0.19,0.20,20,50);
+glColor3ub(153, 223, 255);
+glutSolidSphere(1, 5, 5);
 glPopMatrix();
-
 glPushMatrix();
-glTranslatef(0,0,1);
-glutSolidCone(1.734,2,20,50);
+glTranslatef(5,0,1);
+glutSolidSphere(0.5, 5, 5);
 glPopMatrix();
-
-FreeTexture( texture );
-
-//Kotak dibawah balon
 glPushMatrix();
-glTranslatef(0,0,3.2);
-glScalef(1,1,0.25);
-glutSolidTorus(0.19,0.20,20,50);
+glTranslatef(-2,3,-2);
+glutSolidSphere(0.7, 5, 5);
 glPopMatrix();
-
-
 glPushMatrix();
-glTranslatef(0,0,3.43);
-glScalef(1,1,0.6);
-texture = LoadTexture( "Box.raw", 256, 256 );
-glBindTexture( GL_TEXTURE_2D, texture );
-glutSolidCube(0.6);
-FreeTexture( texture );
+glTranslatef(-5,-3,0);
+glutSolidSphere(0.7, 5, 5);
 glPopMatrix();
-
-glutSwapBuffers();
-glFlush();
+glPushMatrix();
+glTranslatef(4,0,2);
+glutSolidSphere(0.7, 5, 5);
+glPopMatrix();
 }
 
-void reshape(int w, int h){
-glViewport(0, 0 , (GLsizei) w,(GLsizei)h);
-glMatrixMode(GL_PROJECTION);
-glLoadIdentity();
-glFrustum(-1.0,1.0,-1.0,1.0,1.5,20.0);
-glMatrixMode(GL_MODELVIEW);
+void burung(){
+   glLineWidth(0.5);
+   glBegin(GL_LINE_STRIP);
+      glColor3ub(139,139,131);         glVertex2f(-0.1, 2.3);
+      glColor3ub(139,139,131);         glVertex2f(0.0, 2.4);
+      glColor3ub(255,255,240);         glVertex2f(0.1, 2.3);
+      glColor3ub(255,255,240);         glVertex2f(0.0, 2.3);
+      glColor3ub(139,139,131);         glVertex2f(0.1, 2.4);
+      glColor3ub(139,139,131);         glVertex2f(0.2, 2.3);
+   glEnd();
+   glBegin(GL_LINE_STRIP);
+      glColor3ub(139,139,131);         glVertex2f(-1.7, 2.1);
+      glColor3ub(139,139,131);         glVertex2f(-1.6, 2.2);
+      glColor3ub(255,255,240);         glVertex2f(-1.5, 2.1);
+      glColor3ub(255,255,240);         glVertex2f(-1.6, 2.1);
+      glColor3ub(139,139,131);         glVertex2f(-1.5, 2.2);
+      glColor3ub(139,139,131);         glVertex2f(-1.4, 2.1);
+   glEnd();
+   glBegin(GL_LINE_STRIP);
+      glColor3ub(139,139,131);         glVertex2f(-1.9, 2.3);
+      glColor3ub(139,139,131);         glVertex2f(-1.8, 2.4);
+      glColor3ub(255,255,240);         glVertex2f(-1.7, 2.3);
+      glColor3ub(255,255,240);         glVertex2f(-1.8, 2.3);
+      glColor3ub(139,139,131);         glVertex2f(-1.7, 2.4);
+      glColor3ub(139,139,131);         glVertex2f(-1.6, 2.3);
+   glEnd();
+   glBegin(GL_LINE_STRIP);
+      glColor3ub(139,139,131);         glVertex2f(-2.4, 2.2);
+      glColor3ub(139,139,131);         glVertex2f(-2.3, 2.3);
+      glColor3ub(255,255,240);         glVertex2f(-2.2, 2.2);
+      glColor3ub(255,255,240);         glVertex2f(-2.3, 2.2);
+      glColor3ub(139,139,131);         glVertex2f(-2.2, 2.3);
+      glColor3ub(139,139,131);         glVertex2f(-2.1, 2.2);
+   glEnd();
 }
 
-void keyboard (unsigned char key, int x, int y) {
-    if (key == 'x')
-    {
-        x1=1;
-        y1=0;
-        z1=0;
-        sudut+=10;
-    }
-    if (key == 'y')
-    {
-        y1=1;
-        x1=0;
-        z1=0;
-        sudut+=10;
-    }
-    if (key == 'z')
-    {
-        y1=0;
-        x1=0;
-        z1=1;
-        sudut+=10;
-    }
+void alas(){
+     //Menggambar Tanah
+     glColor3f(0.2, 4.5, 2.2);
+	glBegin(GL_POLYGON);
+           glTexCoord2f(0.0f,0.0f);
+           glVertex3f(-2000.0f,0.0f,2000.0f);
+           glTexCoord2f(5.0f,0.0f);
+           glVertex3f(2000.0f,0.0f,2000.0f);
+           glTexCoord2f(5.0f,5.0f);
+           glVertex3f(2000.0f,0.0f,-2000.0f);
+           glTexCoord2f(0.0f,5.0f);
+           glVertex3f(-2000.0f,0.0f,-2000.0f);
+
+        glEnd();
+     glPopMatrix();
+     }
+
+void renderScene(void) {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPushMatrix();
+                   alas();
+    glPopMatrix();
+
+   //awan
+    glPushMatrix();
+    glColor3ub(153, 223, 255);
+    glTranslatef(25,25,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(27,26,1);
+    glutSolidSphere(2.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(29,25,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-25,27,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-23,28,1);
+    glutSolidSphere(2.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-21,27,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-33,24.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-32,25,1);
+    glutSolidSphere(1.25, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-31,24.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
+
+	//Menggambar Halaman
+	glColor3f(0, 3, 0);
+	glBegin(GL_QUADS);
+		glVertex3f(-40.0, 0.1, -40.0);
+		glVertex3f(-40.0, 0.1,  40.0);
+		glVertex3f( 40.0, 0.1,  40.0);
+		glVertex3f( 40.0, 0.1, -40.0);
+	glEnd();
+
+
+    glutSwapBuffers();
 }
 
-void mySpecialKeyboard(int key, int x, int y)
-{
-    switch(key)
-    {
-    case GLUT_KEY_UP:
-        z+=1;
-        break;
-    case GLUT_KEY_DOWN:
-        z-=1;
-        break;
-    }
+
+// Fungsi untuk menyesuaikan perspektif ketika window dirubah ukurannya
+void changeSize(int w, int h) {
+
+	// Menghindari pembagian oleh 0.
+	if(h == 0)
+		h = 1;
+
+    // Rasio antara lebar dengan tinggi layar
+	float ratio = 1.0* w / h;
+
+	// Reset the coordinate system before modifying
+	glMatrixMode(GL_PROJECTION); //Matrik diset : Matrik Proyeksi
+	glLoadIdentity();            //Meload matrik identitas
+
+	// Set the viewport to be the entire window (titik pusat ruang pandang)
+	glViewport(0, 0, w, h);
+
+	// Set the correct perspective.
+	gluPerspective(45,ratio,1,1000); //Parameter perspektif (sudut di sumbu yz, rasio lebar/tinggi,
+                                     //near clipping planes, far clipping plane)
+	glMatrixMode(GL_MODELVIEW);      //Set matrix ke GL_MODELVIEW
+	glLoadIdentity();                //Load identity matrix
+
+    //gluLookAt
+    gluLookAt(x     , y    , z,
+              x + lx,y + ly,z + lz,
+		      0.0f  ,1.0f  ,0.0f);
+
 }
 
-int main(int argc, char** argv){
-glutInit(&argc, argv);
-glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);\
-glutInitWindowSize(500,500);
-glutInitWindowPosition(100,100);
-glutCreateWindow("Kelompok 9");
-init();
-glutDisplayFunc(display);
-glutIdleFunc(display);
-glutReshapeFunc(reshape);
-glutKeyboardFunc (keyboard);
-glutSpecialFunc(mySpecialKeyboard);
-glutMainLoop();
-return 0;
+void orientMe(float ang) {
+
+	lx = sin(ang);
+	lz = -cos(ang);
+	glLoadIdentity();
+	gluLookAt(x, y, z,
+		      x + lx,y + ly,z + lz,
+			  0.0f,1.0f,0.0f);
+}
+
+void moveMeFlat(int direction) {
+	x = x + direction*(lx)*0.1;
+	z = z + direction*(lz)*0.1;
+
+	glLoadIdentity();
+	gluLookAt(x, y, z,
+		      x + lx,y + ly,z + lz,
+			  0.0f,1.0f,0.0f);
+}
+
+
+void inputKey(int key, int x, int y) {
+
+	switch (key) {
+		case GLUT_KEY_LEFT :
+			angle -= 0.05f;
+			orientMe(angle);break;
+		case GLUT_KEY_RIGHT :
+			angle +=0.05f;
+			orientMe(angle);break;
+		//case GLUT_KEY_UP :
+		//	     moveMeFlat(5);break;
+		//case GLUT_KEY_DOWN :
+			//     moveMeFlat(-5);break;
+	}
+}
+
+const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+
+const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
+const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
+const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
+const GLfloat high_shininess[] = { 100.0f };
+
+
+//Fungsi utama
+int main(int argc, char **argv) {
+     //argc -> a pointer to the unmodified argc variable from the main function
+     //argv -> a pointer to the unmodified argv variable from the main function
+     glutInit(&argc, argv);
+
+     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+
+     //Parameter posisi window (x,y)
+     glutInitWindowPosition(100,100);
+
+     //Parameter ukuran window (panjang,lebar)
+	 glutInitWindowSize(640,360);
+
+     //Membuat windows Latihan
+	 glutCreateWindow("kelompok 9");
+
+     glClearColor( 0.1, 0.5, 1, 0);
+     //Fungsi utama untuk menampilkan objek
+     glutDisplayFunc(renderScene);
+
+     //Fungsi yang dijalankan dalam keadaan idle
+     glutIdleFunc(renderScene);
+
+     //Fungsi untuk mengatur perspektif.
+     //Untuk mempertahankan ukuran objek saat jendela dirubah ukurannya
+     glutReshapeFunc(changeSize);
+
+     glutSpecialFunc(inputKey);
+
+     //Mengaktifkan depth testing
+     glEnable(GL_DEPTH_TEST);
+    //Mengatur Pencahayaan
+    glDepthFunc(GL_LESS);
+
+   glEnable(GL_LIGHT0);
+    glEnable(GL_NORMALIZE);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING);
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
+
+
+     //Never ending loop, agar layar tidak langsung tertutup
+ 	 glutMainLoop();
+
 }
