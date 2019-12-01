@@ -53,61 +53,46 @@ glTranslated(_x,_y,_z);
 
 void awan(){
 glPushMatrix();
-glColor3ub(153, 223, 255);
-glutSolidSphere(1, 5, 5);
-glPopMatrix();
-glPushMatrix();
-glTranslatef(5,0,1);
-glutSolidSphere(0.5, 5, 5);
-glPopMatrix();
-glPushMatrix();
-glTranslatef(-2,3,-2);
-glutSolidSphere(0.7, 5, 5);
-glPopMatrix();
-glPushMatrix();
-glTranslatef(-5,-3,0);
-glutSolidSphere(0.7, 5, 5);
-glPopMatrix();
-glPushMatrix();
-glTranslatef(4,0,2);
-glutSolidSphere(0.7, 5, 5);
-glPopMatrix();
+    glColor3ub(153, 223, 255);
+    glTranslatef(25,25,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(27,26,1);
+    glutSolidSphere(2.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(29,25,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-25,27,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-23,28,1);
+    glutSolidSphere(2.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-21,27,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-33,24.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-32,25,1);
+    glutSolidSphere(1.25, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-31,24.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
 }
 
 void burung(){
-   glLineWidth(0.5);
-   glBegin(GL_LINE_STRIP);
-      glColor3ub(139,139,131);         glVertex2f(-0.1, 2.3);
-      glColor3ub(139,139,131);         glVertex2f(0.0, 2.4);
-      glColor3ub(255,255,240);         glVertex2f(0.1, 2.3);
-      glColor3ub(255,255,240);         glVertex2f(0.0, 2.3);
-      glColor3ub(139,139,131);         glVertex2f(0.1, 2.4);
-      glColor3ub(139,139,131);         glVertex2f(0.2, 2.3);
-   glEnd();
-   glBegin(GL_LINE_STRIP);
-      glColor3ub(139,139,131);         glVertex2f(-1.7, 2.1);
-      glColor3ub(139,139,131);         glVertex2f(-1.6, 2.2);
-      glColor3ub(255,255,240);         glVertex2f(-1.5, 2.1);
-      glColor3ub(255,255,240);         glVertex2f(-1.6, 2.1);
-      glColor3ub(139,139,131);         glVertex2f(-1.5, 2.2);
-      glColor3ub(139,139,131);         glVertex2f(-1.4, 2.1);
-   glEnd();
-   glBegin(GL_LINE_STRIP);
-      glColor3ub(139,139,131);         glVertex2f(-1.9, 2.3);
-      glColor3ub(139,139,131);         glVertex2f(-1.8, 2.4);
-      glColor3ub(255,255,240);         glVertex2f(-1.7, 2.3);
-      glColor3ub(255,255,240);         glVertex2f(-1.8, 2.3);
-      glColor3ub(139,139,131);         glVertex2f(-1.7, 2.4);
-      glColor3ub(139,139,131);         glVertex2f(-1.6, 2.3);
-   glEnd();
-   glBegin(GL_LINE_STRIP);
-      glColor3ub(139,139,131);         glVertex2f(-2.4, 2.2);
-      glColor3ub(139,139,131);         glVertex2f(-2.3, 2.3);
-      glColor3ub(255,255,240);         glVertex2f(-2.2, 2.2);
-      glColor3ub(255,255,240);         glVertex2f(-2.3, 2.2);
-      glColor3ub(139,139,131);         glVertex2f(-2.2, 2.3);
-      glColor3ub(139,139,131);         glVertex2f(-2.1, 2.2);
-   glEnd();
+
 }
 
 void alas(){
