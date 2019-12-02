@@ -8,7 +8,6 @@
 #include <assert.h>
 #include <stdarg.h>
 
-
 float angle2=0.0;    // Variable sudut pada saat animasi
 float red=1.0, blue=0.3, green=0.5;
 float sudut=0.0;
@@ -20,39 +19,37 @@ float ert=0.0, yui=0.0;
 static float angle=0.0,ratio;            //Sudut perputaran kamera (terhadap sumbu y)
 static float x=0.0f,y=10.75f,z=55.0f;      //Posisi Kamera
 static float lx=0.0f,ly=0.0f,lz=-1.0f;   //Vektor sudut pandang
-
+double rotate_y = 0;
+double rotate_x = 0;
+int w=1024, h=720;
+int skalaX=0, skalaY=0;
 
 void garis_xy(){
+    glPushMatrix();
+    glTranslated(_x,_y,_z);
+
+    float i;
+
+    glColor3f( 1.0, 1.0, 1.0);
+    glBegin( GL_LINES);
+
+    for (i=-20; i<20; i=i+1) {
+
+    glVertex3f( -20, i, 0);
+    glVertex3f( 20, i, 0);
+    glVertex3f( i,-20, 0);
+    glVertex3f( i,20, 0);
+}
 
 
-     glPushMatrix();
+    glEnd();
+    glPopMatrix();
 
-glTranslated(_x,_y,_z);
-
-
-
-     float i;
-
-            glColor3f( 1.0, 1.0, 1.0);
-  	        glBegin( GL_LINES);
-
-            for (i=-20; i<20; i=i+1) {
-
-                   glVertex3f( -20, i, 0);
-                  glVertex3f( 20, i, 0);
-                   glVertex3f( i,-20, 0);
-                  glVertex3f( i,20, 0);
-                  }
-
-
-           glEnd();
-            glPopMatrix();
-
-          glutSwapBuffers();
-           }
+    glutSwapBuffers();
+}
 
 void awan(){
-glPushMatrix();
+    glPushMatrix();
     glColor3ub(153, 223, 255);
     glTranslatef(25,25,1);
     glutSolidSphere(1.5, 20, 20);
@@ -91,7 +88,48 @@ glPushMatrix();
     glPopMatrix();
 }
 
-void burung(){
+void balon(){
+glLoadIdentity();
+glRotatef(rotate_x, 1.0, 0.0, 0.0);
+glRotatef(rotate_y, 0.0, 1.0, 0.0);
+gluLookAt(0.0,12.0,3.0,0.0,0.0,0.0,0.0,2.0,0.0);
+
+glTranslatef(0,_z,0);
+glRotatef(sudut,_x,_y,_z);
+
+//Balon
+glPushMatrix();
+glutSolidSphere(2.0,20,50);
+glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+glPopMatrix();
+
+glPushMatrix();
+glTranslatef(0,0,2.9);
+glScalef(1,1,0.5);
+glutSolidTorus(0.19,0.20,20,50);
+glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+glPopMatrix();
+
+glPushMatrix();
+glTranslatef(0,0,1);
+glutSolidCone(1.734,2,20,50);
+glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+glPopMatrix();
+
+//Kotak dibawah balon
+glPushMatrix();
+glTranslatef(0,0,3.2);
+glScalef(1,1,0.25);
+glutSolidTorus(0.19,0.20,20,50);
+glColor4f(1.0f,0.5f,0.0f,0.0f);
+glPopMatrix();
+
+glPushMatrix();
+glTranslatef(0,0,3.43);
+glScalef(1,1,0.6);
+glutSolidCube(0.6);
+glColor4f(0.0f,1.0f,1.0f,1.0f);
+glPopMatrix();
 
 }
 
@@ -112,49 +150,27 @@ void alas(){
      glPopMatrix();
      }
 
+void reshape(int w, int h){
+glViewport(0, 0 , (GLsizei) w,(GLsizei)h);
+glMatrixMode(GL_PROJECTION);
+glLoadIdentity();
+glFrustum(-1.0,1.0,-1.0,1.0,1.5,20.0);
+glMatrixMode(GL_MODELVIEW);
+}
+
 void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPushMatrix();
-                   alas();
+
+	glPushMatrix();
+    balon();
     glPopMatrix();
 
-   //awan
-    glPushMatrix();
-    glColor3ub(153, 223, 255);
-    glTranslatef(25,25,1);
-    glutSolidSphere(1.5, 20, 20);
+	glPushMatrix();
+    alas();
     glPopMatrix();
+
     glPushMatrix();
-    glTranslatef(27,26,1);
-    glutSolidSphere(2.5, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(29,25,1);
-    glutSolidSphere(1.5, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-25,27,1);
-    glutSolidSphere(1.5, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-23,28,1);
-    glutSolidSphere(2.5, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-21,27,1);
-    glutSolidSphere(1.5, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-33,24.5,1);
-    glutSolidSphere(0.75, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-32,25,1);
-    glutSolidSphere(1.25, 20, 20);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-31,24.5,1);
-    glutSolidSphere(0.75, 20, 20);
+    awan();
     glPopMatrix();
 
 	//Menggambar Halaman
@@ -165,7 +181,6 @@ void renderScene(void) {
 		glVertex3f( 40.0, 0.1,  40.0);
 		glVertex3f( 40.0, 0.1, -40.0);
 	glEnd();
-
 
     glutSwapBuffers();
 }
@@ -231,10 +246,14 @@ void inputKey(int key, int x, int y) {
 		case GLUT_KEY_RIGHT :
 			angle +=0.05f;
 			orientMe(angle);break;
-		//case GLUT_KEY_UP :
-		//	     moveMeFlat(5);break;
-		//case GLUT_KEY_DOWN :
-			//     moveMeFlat(-5);break;
+		case GLUT_KEY_PAGE_UP :
+             moveMeFlat(5);break;
+		case GLUT_KEY_PAGE_DOWN :
+		     moveMeFlat(-5);break;
+        case GLUT_KEY_UP:
+            rotate_x += 5;break;
+        case GLUT_KEY_DOWN:
+            rotate_x -= 5;break;
 	}
 }
 
@@ -280,11 +299,11 @@ int main(int argc, char **argv) {
      glutSpecialFunc(inputKey);
 
      //Mengaktifkan depth testing
-     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     //Mengatur Pencahayaan
     glDepthFunc(GL_LESS);
 
-   glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT0);
     glEnable(GL_NORMALIZE);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);
@@ -299,8 +318,6 @@ int main(int argc, char **argv) {
     glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
     glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 
-
      //Never ending loop, agar layar tidak langsung tertutup
  	 glutMainLoop();
-
 }
