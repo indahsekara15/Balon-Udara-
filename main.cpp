@@ -49,6 +49,7 @@ void garis_xy(){
 }
 
 void awan(){
+    //awan 1
     glPushMatrix();
     glColor3ub(153, 223, 255);
     glTranslatef(25,25,1);
@@ -62,6 +63,33 @@ void awan(){
     glTranslatef(29,25,1);
     glutSolidSphere(1.5, 20, 20);
     glPopMatrix();
+    //awan 2
+    glPushMatrix();
+    glTranslatef(45,25.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(46,26,1);
+    glutSolidSphere(1.25, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(47,25.5,1);
+    glutSolidSphere(0.75, 20, 20);
+    glPopMatrix();
+    //awan 3
+    glPushMatrix();
+    glTranslatef(50,27.5,1);
+    glutSolidSphere(1.25, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(52,28.5,1);
+    glutSolidSphere(2.20, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(54,27.5,1);
+    glutSolidSphere(1.25, 20, 20);
+    glPopMatrix();
+    //awan 4
     glPushMatrix();
     glTranslatef(-25,27,1);
     glutSolidSphere(1.5, 20, 20);
@@ -74,6 +102,7 @@ void awan(){
     glTranslatef(-21,27,1);
     glutSolidSphere(1.5, 20, 20);
     glPopMatrix();
+    //awan 5
     glPushMatrix();
     glTranslatef(-33,24.5,1);
     glutSolidSphere(0.75, 20, 20);
@@ -86,56 +115,101 @@ void awan(){
     glTranslatef(-31,24.5,1);
     glutSolidSphere(0.75, 20, 20);
     glPopMatrix();
+    //awan 6
+    glPushMatrix();
+    glTranslatef(-65,27.5,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-62,28,1);
+    glutSolidSphere(2.5, 20, 20);
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(-60,27,1);
+    glutSolidSphere(1.5, 20, 20);
+    glPopMatrix();
+}
+
+void pohon(void){
+    //batang
+    GLUquadricObj *pObj;
+    pObj =gluNewQuadric();
+    gluQuadricNormals(pObj, GLU_SMOOTH);
+
+    glPushMatrix();
+    glColor3ub(104,70,14);
+    glRotatef(270,1,0,0);
+    gluCylinder(pObj, 4, 0.7, 30, 25, 25);
+    glPopMatrix();
+}
+
+void ranting(void){
+    GLUquadricObj *pObj;
+    pObj =gluNewQuadric();
+    gluQuadricNormals(pObj, GLU_SMOOTH);
+    glPushMatrix();
+    glColor3ub(104,70,14);
+    glTranslatef(0,27,0);
+    glRotatef(330,1,0,0);
+    gluCylinder(pObj, 0.6, 0.1, 15, 25, 25);
+    glPopMatrix();
+
+    //daun
+    glPushMatrix();
+    glColor3ub(18,118,13);
+    glScaled(5, 5, 5);
+    glTranslatef(0,7,3);
+    glutSolidDodecahedron();
+    glPopMatrix();
 }
 
 void balon(){
-glLoadIdentity();
-glRotatef(rotate_x, 1.0, 0.0, 0.0);
-glRotatef(rotate_y, 0.0, 1.0, 0.0);
-gluLookAt(0.0,12.0,3.0,0.0,0.0,0.0,0.0,2.0,0.0);
+    glLoadIdentity();
+    glRotatef(rotate_x, 1.0, 0.0, 0.0);
+    glRotatef(rotate_y, 0.0, 1.0, 0.0);
+    gluLookAt(0.0,12.0,3.0,0.0,0.0,0.0,0.0,2.0,0.0);
 
-glTranslatef(0,_z,0);
-glRotatef(sudut,_x,_y,_z);
+    glTranslatef(0,_z,0);
+    glRotatef(sudut,_x,_y,_z);
 
-//Balon
-glPushMatrix();
-glutSolidSphere(2.0,20,50);
-glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
-glPopMatrix();
+    //Balon
+    glPushMatrix();
+    glutSolidSphere(2.0,20,50);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glPopMatrix();
 
-glPushMatrix();
-glTranslatef(0,0,2.9);
-glScalef(1,1,0.5);
-glutSolidTorus(0.19,0.20,20,50);
-glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
-glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0,0,2.9);
+    glScalef(1,1,0.5);
+    glutSolidTorus(0.19,0.20,20,50);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glPopMatrix();
 
-glPushMatrix();
-glTranslatef(0,0,1);
-glutSolidCone(1.734,2,20,50);
-glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
-glPopMatrix();
+    glPushMatrix();
+    glTranslatef(0,0,1);
+    glutSolidCone(1.734,2,20,50);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glPopMatrix();
 
-//Kotak dibawah balon
-glPushMatrix();
-glTranslatef(0,0,3.2);
-glScalef(1,1,0.25);
-glutSolidTorus(0.19,0.20,20,50);
-glColor4f(1.0f,0.5f,0.0f,0.0f);
-glPopMatrix();
+    //Kotak dibawah balon
+    glPushMatrix();
+    glTranslatef(0,0,3.2);
+    glScalef(1,1,0.25);
+    glutSolidTorus(0.19,0.20,20,50);
+    glColor4f(1.0f,0.5f,0.0f,0.0f);
+    glPopMatrix();
 
-glPushMatrix();
-glTranslatef(0,0,3.43);
-glScalef(1,1,0.6);
-glutSolidCube(0.6);
-glColor4f(0.0f,1.0f,1.0f,1.0f);
-glPopMatrix();
-
+    glPushMatrix();
+    glTranslatef(0,0,3.43);
+    glScalef(1,1,0.6);
+    glutSolidCube(0.6);
+    glColor4f(0.0f,1.0f,1.0f,1.0f);
+    glPopMatrix();
 }
 
 void alas(){
-     //Menggambar Tanah
-     glColor3f(0.2, 4.5, 2.2);
+    //Menggambar Tanah
+    glColor3f(0.2, 4.5, 2.2);
 	glBegin(GL_POLYGON);
            glTexCoord2f(0.0f,0.0f);
            glVertex3f(-2000.0f,0.0f,2000.0f);
@@ -146,16 +220,16 @@ void alas(){
            glTexCoord2f(0.0f,5.0f);
            glVertex3f(-2000.0f,0.0f,-2000.0f);
 
-        glEnd();
-     glPopMatrix();
-     }
+    glEnd();
+    glPopMatrix();
+}
 
 void reshape(int w, int h){
-glViewport(0, 0 , (GLsizei) w,(GLsizei)h);
-glMatrixMode(GL_PROJECTION);
-glLoadIdentity();
-glFrustum(-1.0,1.0,-1.0,1.0,1.5,20.0);
-glMatrixMode(GL_MODELVIEW);
+    glViewport(0, 0 , (GLsizei) w,(GLsizei)h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glFrustum(-1.0,1.0,-1.0,1.0,1.5,20.0);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void renderScene(void) {
@@ -167,6 +241,87 @@ void renderScene(void) {
 
 	glPushMatrix();
     alas();
+    glPopMatrix();
+
+    //pohon 1
+    glPushMatrix();
+        glTranslatef(-15,4,5);
+        glScalef(0.2, 0.2, 0.2);
+        glRotatef(90,0,1,0);
+        pohon();
+
+        //ranting1
+        ranting();
+
+        //ranting2
+        glPushMatrix();
+        glScalef(1.5, 1.5, 1.5);
+        glTranslatef(0,25,25);
+        glRotatef(250,1,0,0);
+        ranting();
+        glPopMatrix();
+
+        //ranting3
+        glPushMatrix();
+        glScalef(1.8, 1.8, 1.8);
+        glTranslatef(0,-6,21.5);
+        glRotatef(-55,1,0,0);
+        ranting();
+        glPopMatrix();
+    glPopMatrix();
+
+    //pohon 2
+    glPushMatrix();
+        glTranslatef(-21,4,5);
+        glScalef(0.1, 0.1, 0.1);
+        glRotatef(90,0,1,0);
+        pohon();
+
+        //ranting1
+        ranting();
+
+        //ranting2
+        glPushMatrix();
+        glScalef(1.5, 1.5, 1.5);
+        glTranslatef(0,25,25);
+        glRotatef(250,1,0,0);
+        ranting();
+        glPopMatrix();
+
+        //ranting3
+        glPushMatrix();
+        glScalef(1.8, 1.8, 1.8);
+        glTranslatef(0,-6,21.5);
+        glRotatef(-55,1,0,0);
+        ranting();
+        glPopMatrix();
+    glPopMatrix();
+
+    //pohon 3
+    glPushMatrix();
+        glTranslatef(18,4,9);
+        glScalef(0.15, 0.15, 0.15);
+        glRotatef(90,0,1,0);
+        pohon();
+
+        //ranting1
+        ranting();
+
+        //ranting2
+        glPushMatrix();
+        glScalef(1.5, 1.5, 1.5);
+        glTranslatef(0,25,25);
+        glRotatef(250,1,0,0);
+        ranting();
+        glPopMatrix();
+
+        //ranting3
+        glPushMatrix();
+        glScalef(1.8, 1.8, 1.8);
+        glTranslatef(0,-6,21.5);
+        glRotatef(-55,1,0,0);
+        ranting();
+        glPopMatrix();
     glPopMatrix();
 
     glPushMatrix();
@@ -236,14 +391,35 @@ void moveMeFlat(int direction) {
 			  0.0f,1.0f,0.0f);
 }
 
-
+void keyboard (unsigned char key, int x, int y) {
+    if (key == 'x')
+    {
+        _x=1;
+        _y=0;
+        _z=0;
+        sudut+=10;
+    }
+    if (key == 'y')
+    {
+        _y=1;
+        _x=0;
+        _z=0;
+        sudut+=10;
+    }
+    if (key == 'z')
+    {
+        _y=0;
+        _x=0;
+        _z=1;
+        sudut+=10;
+    }
+}
 void inputKey(int key, int x, int y) {
-
-	switch (key) {
-		case GLUT_KEY_LEFT :
+    	switch (key) {
+		case GLUT_KEY_END :
 			angle -= 0.05f;
 			orientMe(angle);break;
-		case GLUT_KEY_RIGHT :
+		case GLUT_KEY_HOME :
 			angle +=0.05f;
 			orientMe(angle);break;
 		case GLUT_KEY_PAGE_UP :
@@ -254,6 +430,10 @@ void inputKey(int key, int x, int y) {
             rotate_x += 5;break;
         case GLUT_KEY_DOWN:
             rotate_x -= 5;break;
+        case GLUT_KEY_LEFT:
+            rotate_y += 5;break;
+        case GLUT_KEY_RIGHT:
+            rotate_y -= 5;break;
 	}
 }
 
@@ -270,35 +450,35 @@ const GLfloat high_shininess[] = { 100.0f };
 
 //Fungsi utama
 int main(int argc, char **argv) {
-     //argc -> a pointer to the unmodified argc variable from the main function
-     //argv -> a pointer to the unmodified argv variable from the main function
-     glutInit(&argc, argv);
+    //argc -> a pointer to the unmodified argc variable from the main function
+    //argv -> a pointer to the unmodified argv variable from the main function
+    glutInit(&argc, argv);
 
-     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
-     //Parameter posisi window (x,y)
-     glutInitWindowPosition(100,100);
+    //Parameter posisi window (x,y)
+    glutInitWindowPosition(100,100);
 
-     //Parameter ukuran window (panjang,lebar)
-	 glutInitWindowSize(640,360);
+    //Parameter ukuran window (panjang,lebar)
+    glutInitWindowSize(640,360);
 
-     //Membuat windows Latihan
-	 glutCreateWindow("kelompok 9");
+    //Membuat windows Latihan
+	glutCreateWindow("kelompok 9");
 
-     glClearColor( 0.1, 0.5, 1, 0);
-     //Fungsi utama untuk menampilkan objek
-     glutDisplayFunc(renderScene);
+    glClearColor( 0.1, 0.5, 1, 0);
+    //Fungsi utama untuk menampilkan objek
+    glutDisplayFunc(renderScene);
 
-     //Fungsi yang dijalankan dalam keadaan idle
-     glutIdleFunc(renderScene);
+    //Fungsi yang dijalankan dalam keadaan idle
+    glutIdleFunc(renderScene);
 
-     //Fungsi untuk mengatur perspektif.
-     //Untuk mempertahankan ukuran objek saat jendela dirubah ukurannya
-     glutReshapeFunc(changeSize);
+    //Fungsi untuk mengatur perspektif.
+    //Untuk mempertahankan ukuran objek saat jendela dirubah ukurannya
+    glutReshapeFunc(changeSize);
+    glutKeyboardFunc (keyboard);
+    glutSpecialFunc(inputKey);
 
-     glutSpecialFunc(inputKey);
-
-     //Mengaktifkan depth testing
+    //Mengaktifkan depth testing
     glEnable(GL_DEPTH_TEST);
     //Mengatur Pencahayaan
     glDepthFunc(GL_LESS);
