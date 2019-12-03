@@ -165,6 +165,7 @@ void ranting(void){
 
 void balon(){
     glLoadIdentity();
+
     glRotatef(rotate_x, 1.0, 0.0, 0.0);
     glRotatef(rotate_y, 0.0, 1.0, 0.0);
     gluLookAt(0.0,12.0,3.0,0.0,0.0,0.0,0.0,2.0,0.0);
@@ -175,20 +176,20 @@ void balon(){
     //Balon
     glPushMatrix();
     glutSolidSphere(2.0,20,50);
-    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f); //ring
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0,0,2.9);
     glScalef(1,1,0.5);
     glutSolidTorus(0.19,0.20,20,50);
-    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);//kerucut
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0,0,1);
     glutSolidCone(1.734,2,20,50);
-    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
+    glColor4f(1.0f, 0.0f, 0.0f, 0.0f);//red  list box
     glPopMatrix();
 
     //Kotak dibawah balon
@@ -196,20 +197,20 @@ void balon(){
     glTranslatef(0,0,3.2);
     glScalef(1,1,0.25);
     glutSolidTorus(0.19,0.20,20,50);
-    glColor4f(1.0f,0.5f,0.0f,0.0f);
+    glColor4f(1.0f,0.5f,0.0f,0.0f); // box
     glPopMatrix();
 
     glPushMatrix();
     glTranslatef(0,0,3.43);
     glScalef(1,1,0.6);
     glutSolidCube(0.6);
-    glColor4f(0.0f,1.0f,1.0f,1.0f);
+    glColor4f(0.0f,1.0f,1.0f,1.0f); //kotak
     glPopMatrix();
 }
 
 void alas(){
     //Menggambar Tanah
-    glColor3f(0.2, 4.5, 2.2);
+    glColor3f(0, 3, 0);
 	glBegin(GL_POLYGON);
            glTexCoord2f(0.0f,0.0f);
            glVertex3f(-2000.0f,0.0f,2000.0f);
@@ -329,7 +330,7 @@ void renderScene(void) {
     glPopMatrix();
 
 	//Menggambar Halaman
-	glColor3f(0, 3, 0);
+	glColor3f(0, 2.5, 0);
 	glBegin(GL_QUADS);
 		glVertex3f(-40.0, 0.1, -40.0);
 		glVertex3f(-40.0, 0.1,  40.0);
@@ -501,3 +502,4 @@ int main(int argc, char **argv) {
      //Never ending loop, agar layar tidak langsung tertutup
  	 glutMainLoop();
 }
+
